@@ -1,3 +1,4 @@
+//login.js
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
 
@@ -15,6 +16,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  todos:[
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Todo',
+      required:true,
+    }
+  ]
 });
 
 userSchema.pre("save", async function (next) {
