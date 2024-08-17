@@ -1,3 +1,4 @@
+//auth.js
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/login.models.js";
@@ -16,31 +17,11 @@ router.post("/register", async (req, res) => {
     }
     const user = new User({ email, password, username });
     await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully",user });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
-
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user)
-//       return res.status(400).json({ error: "Invalid email or password" });
-
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch)
-//       return res.status(400).json({ error: "Invalid email or password" });
-
-//     const token = jwt.sign({ id: user._id }, { expiresIn: "1h" });
-//     res.json({ token });
-//     JWT_SECRET;
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
