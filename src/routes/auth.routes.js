@@ -18,29 +18,9 @@ router.post("/register", async (req, res) => {
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ message: err.message });
   }
 });
-
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user)
-//       return res.status(400).json({ error: "Invalid email or password" });
-
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch)
-//       return res.status(400).json({ error: "Invalid email or password" });
-
-//     const token = jwt.sign({ id: user._id }, { expiresIn: "1h" });
-//     res.json({ token });
-//     JWT_SECRET;
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -48,12 +28,12 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(400).json({ error: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
 
     if (!process.env.JWT_SECRET) {
@@ -65,7 +45,7 @@ router.post("/login", async (req, res) => {
     });
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
