@@ -1,3 +1,4 @@
+//auth.js
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/login.models.js";
@@ -16,7 +17,7 @@ router.post("/register", async (req, res) => {
     }
     const user = new User({ email, password, username });
     await user.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "User registered successfully",user });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

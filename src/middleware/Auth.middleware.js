@@ -1,3 +1,4 @@
+
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,4 +14,5 @@ export const authMiddleware = async (req, res, next) => {
     req.user = user;
     next();
   });
+  
 };
