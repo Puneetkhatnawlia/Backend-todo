@@ -114,13 +114,14 @@ router.put("/:id", authMiddleware, async (req, res) => {
 router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const _id = req.user.id;
-    const todo = await Todo.findByIdAndDelete(req.params.id);
-    const user = await User.findOne({ _id });
-    if (!todo ) return res.status(404).json({ message: "Todo not found" });
 
-    const newUser = user.todos.filter((x)=>x._id !== todo._id)
+    // TODO DELETED
+    await Todo.findByIdAndDelete(req.params.id);
 
-    await newUser.save();
+    //FIND USER AND REMOVE TODO ID
+    await User.findOneAndUpdate({ _id },{
+      $pull: { todos: req.params.id }
+    });
 
     res.status(204).json({
       success: true,
